@@ -4,55 +4,90 @@
     {
         static void Main(string[] args)
         {
-            int pos = 0;       // Position Initializin
-            int dice = 0;      // Dice 
-            int opt = 0;       // options
-            int winCnt = 0;
+            Console.WriteLine("Enter player one");      //Taking user input for player1
+            string playerOne = Console.ReadLine();
+            Console.WriteLine("Enter player two");      //Taking user input for player2
+            string playerTwo = Console.ReadLine();
 
+            int playerOnePosi = 0;      //Initializing value
+            int playerTwoPosi = 0;
+            int count = 0;
 
-            Console.WriteLine("_______| Welcome! to Snake and Ladder Game |_______\n");
-          
-            Random random = new Random();       //Creating object random
+            Random random = new Random();       //Creating object for dice 
+            Random random1 = new Random();      //Creating object for switch case conditions
 
-            Random random1 = new Random();      //Creating object random
-
-            Console.WriteLine("\nThe postition of player starts: {0} and random number of Dice: {1}\n\n", pos, dice);
-           
-
-            while(pos < 100)
+            while (playerOnePosi < 100 && playerTwoPosi < 100)        //While loop for conditions required for both player
             {
-                dice = random.Next(1, 7); // Using random method 
-                opt = random1.Next(1, 4); //Using random method
-                winCnt++;
-
-                switch (opt)         //Checking for options using switch case
+                int option = random1.Next(1, 4);        //Using random method for Swich case
+                int Dice = random.Next(1, 7);           //Using random method for Dice
+                if (Dice % 2 == 0)        //Condition to get alternate turn of each player 
                 {
-                    case 1:
-                        pos = pos + dice;
+                    if (playerOnePosi < 100)        //For player one to play
+                    {
+                        count = count + 1;
 
-                        if(pos > 100)
+                        switch (option)         //Checking for options using switch case
                         {
-                            pos = 100;
+                            case 1:
+                                playerOnePosi = playerOnePosi + Dice;       //Updating position
+                                if (playerOnePosi > 100)            //Updating to get 100
+                                    playerOnePosi = 100;
+                                Console.WriteLine("The player1 moves ahead by number Dice value " + playerOnePosi);
+                                break;
+                            case 2:
+                                playerOnePosi = playerOnePosi - Dice;       //Updating position
+                                if (playerOnePosi < 0)          //Upadating to get 0
+                                    playerOnePosi = 0;
+                                Console.WriteLine("The player1 moves behind by number Dice value " + playerOnePosi);
+                                break;
+
+                            default:
+                                Console.WriteLine("The player1 remain at same place " + playerOnePosi);
+                                break;
                         }
-                        Console.WriteLine("\nThe player moves ahead by number Dice value : " + pos);
-                        break;
-                    case 2:
-                        pos = pos - dice;
-                        if(pos < 0)
-                        {
-                            pos = 0;
-                        }
-                        Console.WriteLine("\nThe player moves behind by number Dice value : " + pos);
-                        break;
-                    default:
-                        Console.WriteLine("\nThe player stay at same place : " + pos);
-                        break;
+                    }
+
                 }
+                else
+                {
+                    if (playerTwoPosi < 100)        //For player two to play
+                    {
+                        count = count + 1;
 
+                        switch (option)         //Checking for options using switch case
+                        {
+                            case 1:
+                                playerTwoPosi = playerTwoPosi + Dice;       //Updating position
+                                if (playerTwoPosi > 100)            //Updating to get 100
+                                    playerTwoPosi = 100;
+                                Console.WriteLine("The player2 moves ahead by number Dice value " + playerTwoPosi);
+                                break;
+                            case 2:
+                                playerTwoPosi = playerTwoPosi - Dice;       //Updating position
+                                if (playerTwoPosi < 0)          //Updating to get 0
+                                    playerTwoPosi = 0;
+                                Console.WriteLine("The player2 moves behind by number Dice value " + playerTwoPosi);
+                                break;
+
+                            default:
+                                Console.WriteLine("The player2 remain at same place " + playerTwoPosi);
+                                break;
+                        }
+                    }
+                }
             }
-
+           
             Console.WriteLine("\n\n\n----------------------------END----------------------------\n");
-            Console.WriteLine("\t{0} times the dice was played to win the game ", winCnt);
+            if (playerOnePosi == 100)
+            {
+                Console.WriteLine("\t\tThe Winner is : " +playerOne);
+            }
+            else
+            {
+                Console.WriteLine("\t\tThe Winner is : \n" + playerTwo);
+            }
+            Console.WriteLine("\t{0} times the dice was played to win the game ", count);         //To count number of to times dice rolled to get Win position.
+            
             Console.WriteLine("-----------------------------------------------------------\n");
         }
     }
